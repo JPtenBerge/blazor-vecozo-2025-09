@@ -67,6 +67,24 @@ Multi Page Application - MPA
   - Azure SignalR Service  5000 connecties
 - met MAUI kun je Blazor Mobile Bindings inzetten
 
+## FluentValidation vs default Data Annotations
+
+- Leest lekker
+- Validatie op 1 plek
+- testbaarheid
+- krachtigere validaties: conditionele validaties, async validatie, items-in-lijst-validatie
+  ```cs
+  When(x => x.Age > 18, () =>
+  {
+    RuleFor(x => x...)...;
+  });
+
+  RuleForEach(x => x.Products).ChildRules(product =>
+  {
+    product.RuleFor(x => x.Code).NotEmpty().WithMessage("...");
+  });
+  ```
+
 ## Coole links
 
 - [Framework benchmark comparison](https://github.com/krausest/js-framework-benchmark)
