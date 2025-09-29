@@ -1,0 +1,35 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>McPage</h1>
+
+Naam: @Name
+
+@if (Burgers is null || !Burgers.Any())
+{
+    <text>Geen burgers vandaag!</text>
+}
+else
+{
+
+    <table>
+        <thead>
+            <tr>
+                <td>Naam</td>
+                <td>Rating</td>
+                <td>Foto</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var burger in Burgers)
+            {
+                <tr class="@(burger.Rating > 6 ? "awesome" : string.Empty)">
+                    <td>@burger.Name</td>
+                    <td>@burger.Rating</td>
+                    <td><img src="@burger.PhotoUrl" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
