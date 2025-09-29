@@ -1,4 +1,5 @@
 using DemoProject.Components;
+using DemoProject.Repositories;
 
 namespace DemoProject
 {
@@ -10,6 +11,8 @@ namespace DemoProject
 
             // Add services to the container.
             builder.Services.AddRazorComponents();
+
+            builder.Services.AddTransient<IBurgerRepository, BurgerRepository>();
 
             var app = builder.Build();
 
