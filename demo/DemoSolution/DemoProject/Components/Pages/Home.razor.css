@@ -5,3 +5,7 @@
 .awesome {
 	background: lightgoldenrodyellow;
 }
+
+form ol {
+	list-style: none;
+}

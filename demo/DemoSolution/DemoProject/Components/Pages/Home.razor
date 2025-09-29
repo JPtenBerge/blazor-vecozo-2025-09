@@ -1,10 +1,41 @@
 ﻿@page "/"
+@using Blazored.FluentValidation
 
 <PageTitle>Home</PageTitle>
 
 <h1>McPage</h1>
 
-Naam: @Name
+<EditForm Model="@NewBurger" OnValidSubmit="AddBurger" FormName="NewBurgerForm">
+    @* <DataAnnotationsValidator /> *@
+    <FluentValidationValidator />
+
+    <ol>
+        <li>
+            <label for="input-name">Naam:</label>
+            <InputText @bind-Value="NewBurger.Name" id="input-name" />
+            <ValidationMessage For="() => NewBurger.Name" />
+        </li>
+        <li>
+            <label>Prijs:</label>
+            <InputNumber @bind-Value="NewBurger.Price" />
+            <ValidationMessage For="() => NewBurger.Price" />
+        </li>
+        <li>
+            <label>Rating:</label>
+            <InputNumber @bind-Value="NewBurger.Rating" />
+            <ValidationMessage For="() => NewBurger.Rating" />
+        </li>
+        <li>
+            <label>Foto URL:</label>
+            <InputText @bind-Value="NewBurger.PhotoUrl" />
+            <ValidationMessage For="() => NewBurger.PhotoUrl" />
+        </li>
+        <li>
+            <button>Voeg burger toe</button>
+        </li>
+    </ol>
+</EditForm>
+
 
 @if (Burgers is null || !Burgers.Any())
 {
