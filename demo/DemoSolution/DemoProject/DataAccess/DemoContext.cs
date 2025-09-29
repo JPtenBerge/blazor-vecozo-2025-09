@@ -21,11 +21,11 @@ public class DemoContext : DbContext
 
         modelBuilder.Entity<Burger>().Property(x => x.Price)
             .IsRequired()
-            .HasPrecision(2, 2);
+            .HasPrecision(8, 2);
 
         modelBuilder.Entity<Burger>().Property(x => x.Rating)
             .IsRequired()
-            .HasPrecision(2, 2);
+            .HasPrecision(2, 1);
 
         modelBuilder.Entity<Burger>().Property(x => x.PhotoUrl)
             .IsRequired()

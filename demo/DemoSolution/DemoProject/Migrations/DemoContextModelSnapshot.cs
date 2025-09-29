@@ -40,12 +40,12 @@ namespace DemoProject.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(2, 2)
-                        .HasColumnType("decimal(2,2)");
+                        .HasPrecision(8, 2)
+                        .HasColumnType("decimal(8,2)");
 
                     b.Property<decimal>("Rating")
-                        .HasPrecision(2, 2)
-                        .HasColumnType("decimal(2,2)");
+                        .HasPrecision(2, 1)
+                        .HasColumnType("decimal(2,1)");
 
                     b.HasKey("Id");
 

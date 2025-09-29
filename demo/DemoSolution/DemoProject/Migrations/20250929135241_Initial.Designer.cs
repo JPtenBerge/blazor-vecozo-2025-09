@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoProject.Migrations
 {
     [DbContext(typeof(DemoContext))]
-    [Migration("20250929132406_Initial")]
+    [Migration("20250929135241_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -43,12 +43,12 @@ namespace DemoProject.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(2, 2)
-                        .HasColumnType("decimal(2,2)");
+                        .HasPrecision(8, 2)
+                        .HasColumnType("decimal(8,2)");
 
                     b.Property<decimal>("Rating")
-                        .HasPrecision(2, 2)
-                        .HasColumnType("decimal(2,2)");
+                        .HasPrecision(2, 1)
+                        .HasColumnType("decimal(2,1)");
 
                     b.HasKey("Id");
 
