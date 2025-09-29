@@ -85,6 +85,20 @@ Multi Page Application - MPA
   });
   ```
 
+## Dependency injection
+
+```cs
+.AddSingleton(); // 1 instance to rule them all 
+.AddScoped();    // per scope
+.AddTransient()  // altijd een nieuwe
+```
+
+`AddScoped()` - wat is scoped?
+
+- Blazor Static SSR: per request (HTTP/WebSocket/...)
+- Blazor WebAssembly: [singleton](https://learn.microsoft.com/en-us/aspnet/core/blazor/fundamentals/dependency-injection?view=aspnetcore-9.0#service-lifetime)
+- Blazor Server: **per SignalR-circuit**  <== mogelijk veel langer dan normaal.
+
 ## Coole links
 
 - [Framework benchmark comparison](https://github.com/krausest/js-framework-benchmark)
