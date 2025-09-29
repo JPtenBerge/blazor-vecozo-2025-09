@@ -67,8 +67,9 @@ Multi Page Application - MPA
   - Azure SignalR Service  5000 connecties
 - met MAUI kun je Blazor Mobile Bindings inzetten
 
+## Coole links
 
-
+- [Framework benchmark comparison](https://github.com/krausest/js-framework-benchmark)
 
 
 
