@@ -5,62 +5,70 @@
 
 <h1>McPage</h1>
 
-<EditForm Model="@NewBurger" OnValidSubmit="AddBurger" FormName="NewBurgerForm">
-    @* <DataAnnotationsValidator /> *@
-    <FluentValidationValidator />
+<div class="flex">
 
-    <ol>
-        <li>
-            <label for="input-name">Naam:</label>
-            <InputText @bind-Value="NewBurger.Name" id="input-name" />
-            <ValidationMessage For="() => NewBurger.Name" />
-        </li>
-        <li>
-            <label>Prijs:</label>
-            <InputNumber @bind-Value="NewBurger.Price" />
-            <ValidationMessage For="() => NewBurger.Price" />
-        </li>
-        <li>
-            <label>Rating:</label>
-            <InputNumber @bind-Value="NewBurger.Rating" />
-            <ValidationMessage For="() => NewBurger.Rating" />
-        </li>
-        <li>
-            <label>Foto URL:</label>
-            <InputText @bind-Value="NewBurger.PhotoUrl" />
-            <ValidationMessage For="() => NewBurger.PhotoUrl" />
-        </li>
-        <li>
-            <button>Voeg burger toe</button>
-        </li>
-    </ol>
-</EditForm>
+    <EditForm Model="@NewBurger" OnValidSubmit="AddBurger" FormName="NewBurgerForm">
+        <h2>Burger toevoegen</h2>
 
+        @* <DataAnnotationsValidator /> *@
+        <FluentValidationValidator />
 
-@if (Burgers is null || !Burgers.Any())
-{
-    <text>Geen burgers vandaag!</text>
-}
-else
-{
+        <ol>
+            <li>
+                <label for="input-name">Naam:</label>
+                <InputText @bind-Value="NewBurger.Name" id="input-name" />
+                <ValidationMessage For="() => NewBurger.Name" />
+            </li>
+            <li>
+                <label for="input-price">Prijs:</label>
+                <InputNumber id="input-price" @bind-Value="NewBurger.Price" />
+                <ValidationMessage For="() => NewBurger.Price" />
+            </li>
+            <li>
+                <label for="input-rating">Rating:</label>
+                <InputNumber id="input-rating" @bind-Value="NewBurger.Rating" />
+                <ValidationMessage For="() => NewBurger.Rating" />
+            </li>
+            <li>
+                <label for="input-photo-url">Foto URL:</label>
+                <InputText id="input-photo-url" @bind-Value="NewBurger.PhotoUrl" />
+                <ValidationMessage For="() => NewBurger.PhotoUrl" />
+            </li>
+            <li>
+                <button>Voeg burger toe</button>
+            </li>
+        </ol>
+    </EditForm>
 
-    <table>
-        <thead>
-            <tr>
-                <td>Naam</td>
-                <td>Rating</td>
-                <td>Foto</td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var burger in Burgers)
-            {
-                <tr class="@(burger.Rating > 6 ? "awesome" : string.Empty)">
-                    <td>@burger.Name</td>
-                    <td>@burger.Rating</td>
-                    <td><img src="@burger.PhotoUrl" /></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+    <article>
+        <h2>De burgers</h2>
+
+        @if (Burgers is null || !Burgers.Any())
+        {
+            <text>Geen burgers vandaag!</text>
+        }
+        else
+        {
+
+            <table>
+                <thead>
+                    <tr>
+                        <td>Naam</td>
+                        <td>Rating</td>
+                        <td>Foto</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var burger in Burgers)
+                    {
+                        <tr class="@(burger.Rating > 6 ? "awesome" : string.Empty)">
+                            <td>@burger.Name</td>
+                            <td>@burger.Rating</td>
+                            <td><img src="@burger.PhotoUrl" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </article>
+</div>
