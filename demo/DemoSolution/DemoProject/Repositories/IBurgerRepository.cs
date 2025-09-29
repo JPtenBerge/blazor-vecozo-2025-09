@@ -4,6 +4,6 @@ namespace DemoProject.Repositories;
 
 public interface IBurgerRepository
 {
-    Task AddAsync(Burger newBurger);
+    Task<Burger> AddAsync(Burger newBurger);
     Task<IEnumerable<Burger>> GetAllAsync();
 }

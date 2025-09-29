@@ -18,11 +18,11 @@ public partial class Home : ComponentBase
         NewBurger ??= new();
         Burgers = (await BurgerRepository.GetAllAsync()).ToList();
     }
-    public void AddBurger()
+    public async Task AddBurger()
     {
         Thread.Sleep(3000);
-        Burgers!.Add(NewBurger);
+        var updatedBurger = await BurgerRepository.AddAsync(NewBurger);
 
-        Console.WriteLine($"adding burger! {NewBurger.Name} krijgt een {NewBurger.Rating}");
+
     }
 }
