@@ -1,0 +1,30 @@
+﻿@page "/upload"
+@using DemoProject.Entities
+
+<h3>Upload</h3>
+
+<EditForm Model="NewBurger" enctype="multipart/form-data" FormName="werk">
+
+    <input name="File" type="file" />
+
+    <button>Submit</button>
+</EditForm>
+
+
+@code {
+    public Burger NewBurger { get; set; } = new();
+
+    [SupplyParameterFromForm(FormName ="werk")]
+    public IFormFile File { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (File is not null)
+        {
+            using var stream = File.OpenReadStream();
+            using var reader = new StreamReader(stream);
+            var content = await reader.ReadToEndAsync();
+            Console.WriteLine($"content: {content}");
+        }
+    }
+}

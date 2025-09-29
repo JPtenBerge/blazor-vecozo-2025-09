@@ -22,7 +22,5 @@ public partial class Home : ComponentBase
     {
         Thread.Sleep(3000);
         var updatedBurger = await BurgerRepository.AddAsync(NewBurger);
-
-
     }
 }
