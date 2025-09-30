@@ -13,7 +13,8 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddRazorComponents()
-            .AddInteractiveServerComponents();
+            .AddInteractiveServerComponents()
+            .AddInteractiveWebAssemblyComponents();
         //builder.Services.AddTransient<IBurgerRepository, BurgerRepository>();
         builder.Services.AddTransient<IBurgerRepository, BurgerDbRepository>();
         builder.Services.AddDbContextFactory<DemoContext>(opts =>
@@ -39,7 +40,9 @@ public class Program
         app.MapBurgerEndpoints();
 
         app.MapRazorComponents<App>()
-            .AddInteractiveServerRenderMode();
+            .AddInteractiveServerRenderMode()
+            .AddInteractiveWebAssemblyRenderMode()
+            .AddAdditionalAssemblies(typeof(BlazorApp1.Client._Imports).Assembly);
 
         app.Run();
     }
