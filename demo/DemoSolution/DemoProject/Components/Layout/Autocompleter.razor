@@ -1,0 +1,23 @@
+﻿@using System.Text.Json
+@typeparam T
+
+
+<input @bind="Query" @bind:event="oninput" @onkeyup="Autocomplete" @onkeydown="HandleKeyDown" />
+
+@if (Suggestions is not null)
+{
+
+    <ul>
+        @for (var i = 0; i < Suggestions.Count; i++)
+        {
+            var suggestion = Suggestions[i];
+            // fugly way
+            @* @{
+                var burger = suggestion as Burger;
+            } *@
+            <li class="@(ActiveSuggestionIndex == i ? "active" : "")">
+                @JsonSerializer.Serialize(suggestion)
+            </li>
+        }
+    </ul>
+}

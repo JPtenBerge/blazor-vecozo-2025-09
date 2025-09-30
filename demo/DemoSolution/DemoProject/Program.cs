@@ -11,7 +11,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddRazorComponents();
+        builder.Services.AddRazorComponents()
+            .AddInteractiveServerComponents();
         //builder.Services.AddTransient<IBurgerRepository, BurgerRepository>();
         builder.Services.AddTransient<IBurgerRepository, BurgerDbRepository>();
         builder.Services.AddDbContext<DemoContext>(opts =>
@@ -34,7 +35,8 @@ public class Program
         app.UseStaticFiles();
         app.UseAntiforgery();
 
-        app.MapRazorComponents<App>();
+        app.MapRazorComponents<App>()
+            .AddInteractiveServerRenderMode();
 
         app.Run();
     }

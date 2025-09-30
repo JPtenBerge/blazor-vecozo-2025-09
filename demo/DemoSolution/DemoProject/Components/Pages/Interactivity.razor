@@ -1,0 +1,38 @@
+﻿@page "/interactivity"
+@using DemoProject.Entities
+@using DemoProject.Repositories
+@rendermode InteractiveServer
+
+<h3>Interactivity</h3>
+
+Counter staat nu op: @Counter
+
+<button @onclick="Increment">Klik mij</button>
+<hr />
+
+<h3>Autocompleter</h3>
+
+<Autocompleter T="Burger" Data="Burgers" OnSelect="HandleSelect" />
+
+
+@code {
+    [Inject] public IBurgerRepository BurgerRepository { get; set; } = null!;
+
+    public List<Burger>? Burgers { get; set; }
+    public int Counter { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Burgers = (await BurgerRepository.GetAllAsync()).ToList();
+    }
+
+    void Increment()
+    {
+        Counter++;
+    }
+
+    void HandleSelect(Burger burger)
+    {
+        Console.WriteLine($"Hey een burger! {burger.Name}");
+    }
+}
