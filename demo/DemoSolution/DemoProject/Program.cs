@@ -1,5 +1,6 @@
 using DemoProject.Components;
 using DemoProject.DataAccess;
+using DemoProject.Endpoints;
 using DemoProject.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,8 @@ public class Program
 
         app.UseStaticFiles();
         app.UseAntiforgery();
+
+        app.MapBurgerEndpoints();
 
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode();
