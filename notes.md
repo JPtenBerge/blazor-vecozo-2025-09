@@ -99,9 +99,26 @@ Multi Page Application - MPA
 - Blazor WebAssembly: [singleton](https://learn.microsoft.com/en-us/aspnet/core/blazor/fundamentals/dependency-injection?view=aspnetcore-9.0#service-lifetime)
 - Blazor Server: **per SignalR-circuit**  <== mogelijk veel langer dan normaal.
 
+## Component library integreren
+
+Is meestal deze stappen doorlopen:
+
+0. check license/compatibility (niet alle libraries ondersteunen Static SSR)
+1. install package
+2. In `App.razor` globale componenten opnemen: `<Theme />`, `<Snackbar />`
+3. Dependency injection  `builder.Services.AddRadzenUIControls();` bijv.
+4. Styling opnemen in `App.razor`  `<link rel="stylesheet" href="">`
+5. `.js`-script opnemen - UI libraries zijn vaak gewoon wrappers om bestaande JS-libs
+6. `Imports.razor` uitbreiden met `@using`
+
+Meestal ben je dan good to go!
+
 ## Coole links
 
 - [Framework benchmark comparison](https://github.com/krausest/js-framework-benchmark)
+- [Awesome Blazor](https://github.com/AdrienTorris/awesome-blazor?tab=readme-ov-file#libraries--extensions), geinig repootje met een hoop handige dingen voor Blazor. Mooi overzichtje component libraries.
+
+
 
 
 
