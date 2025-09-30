@@ -9,6 +9,7 @@ public partial class Autocompleter<T> where T : class
 
     [Parameter] public List<T> Data { get; set; }
     [Parameter] public EventCallback<T> OnSelect { get; set; }
+    [Parameter] public RenderFragment<T> ItemTemplate { get; set; }
 
     public List<T> Suggestions { get; set; }
     public int? ActiveSuggestionIndex { get; set; }

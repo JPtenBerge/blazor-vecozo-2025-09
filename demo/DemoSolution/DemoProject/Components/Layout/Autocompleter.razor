@@ -15,9 +15,10 @@
             @* @{
                 var burger = suggestion as Burger;
             } *@
-            <li class="@(ActiveSuggestionIndex == i ? "active" : "")">
+            @* <li class="@(ActiveSuggestionIndex == i ? "active" : "")">
                 @JsonSerializer.Serialize(suggestion)
-            </li>
+            </li> *@
+            <li class="@(ActiveSuggestionIndex == i ? "active" : "")">@ItemTemplate(suggestion)</li>
         }
     </ul>
 }

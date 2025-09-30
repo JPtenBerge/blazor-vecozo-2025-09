@@ -12,7 +12,11 @@ Counter staat nu op: @Counter
 
 <h3>Autocompleter</h3>
 
-<Autocompleter T="Burger" Data="Burgers" OnSelect="HandleSelect" />
+<Autocompleter T="Burger" Data="Burgers" OnSelect="HandleSelect">
+    <ItemTemplate Context="burger">
+        @burger.Name kost @burger.Price.ToString("C")
+    </ItemTemplate>
+</Autocompleter>
 
 
 @code {
