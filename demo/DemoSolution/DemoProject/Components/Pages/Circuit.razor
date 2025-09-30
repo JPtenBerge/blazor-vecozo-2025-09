@@ -1,0 +1,54 @@
+﻿@page "/circuit"
+@using DemoProject.DataAccess
+@using DemoProject.Entities
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+@inject IDbContextFactory<DemoContext> ContextFactory
+
+<h3>Circuit</h3>
+
+<button @onclick="GetAll">Get all</button>
+<button @onclick="Add">Add</button>
+<button @onclick="Edit">Edit</button>
+
+<input @bind="ToEditBurger.Id" />
+
+Add burger ID: @ToAddBurger.Id
+
+@if (Burgers is not null)
+{
+    <ul>
+        @foreach (var burger in Burgers)
+        {
+            <li>@burger.Name heeft ID @burger.Id</li>
+        }
+    </ul>
+}
+
+
+@code {
+    public List<Burger> Burgers { get; set; }
+    public Burger ToAddBurger { get; set; } = new() { Name = "McRib", Price = 8.9M, Rating = 5M, PhotoUrl = "" };
+    public Burger ToEditBurger { get; set; } = new() { Id = 4, Name = "McRibby", Price = 8.9M, Rating = 5M, PhotoUrl = "" };
+
+    async Task GetAll()
+    {
+        using var context = await ContextFactory.CreateDbContextAsync();
+        Burgers = await context.Burgers.ToListAsync();
+    }
+    async Task Add()
+    {
+        using var context = await ContextFactory.CreateDbContextAsync();
+        context.Burgers.Add(ToAddBurger); // <== begin tracking
+        await context.SaveChangesAsync();
+    }
+    async Task Edit()
+    {
+        using var context = await ContextFactory.CreateDbContextAsync();
+        context.Update(ToEditBurger);
+        // Context.Burgers.Single(x => x.Id == ToEditBurger.Id);
+
+
+        await context.SaveChangesAsync();
+    }
+}

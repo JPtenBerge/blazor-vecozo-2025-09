@@ -16,10 +16,10 @@ public class Program
             .AddInteractiveServerComponents();
         //builder.Services.AddTransient<IBurgerRepository, BurgerRepository>();
         builder.Services.AddTransient<IBurgerRepository, BurgerDbRepository>();
-        builder.Services.AddDbContext<DemoContext>(opts =>
+        builder.Services.AddDbContextFactory<DemoContext>(opts =>
         {
             opts.UseSqlServer(builder.Configuration.GetConnectionString("DemoContext"));
-        });
+        }, ServiceLifetime.Transient);
 
         var app = builder.Build();
 
