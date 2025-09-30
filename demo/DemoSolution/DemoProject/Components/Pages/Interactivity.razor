@@ -8,6 +8,8 @@
 Counter staat nu op: @Counter
 
 <button @onclick="Increment">Klik mij</button>
+
+<button @onclick="Start">Start</button>
 <hr />
 
 <h3>Autocompleter</h3>
@@ -28,6 +30,17 @@ Counter staat nu op: @Counter
     protected override async Task OnInitializedAsync()
     {
         Burgers = (await BurgerRepository.GetAllAsync()).ToList();
+
+
+    }
+
+    void Start()
+    {
+        var i = 0;
+        var timer = new Timer(new TimerCallback(state =>
+        {
+            Console.WriteLine($"timer gestart! {++i} {Thread.CurrentThread.ManagedThreadId}");
+        }), null, 1000, 1000);
     }
 
     void Increment()
