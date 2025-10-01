@@ -159,6 +159,65 @@ browser van domein A ===> domein B  HTTP-request VANUIT JAVASCRIPT
   - controller: bij de constructor declareren. Met 8 methoden in je controller worden er waarschijnlijk dependencies aangemaakt die vervolgens niet gebruikt worden.
   - minimal API: methode zelf, daarmee dan ook veel nauwkeuriger resource-gebruik
 
+## Blazor change detection
+
+Change detection: "doorhebben of data verandert"
+
+- Angular
+  => complex algoritme - checkt wel allerlei async shizzle
+  ```ts
+  // Angular's algoritme overschrijft native browserfuncties:
+  let originalTimeout = window.setTimeout;
+  window.setTimeout = (callback) => {
+    // "open-heart surgery on the browser"
+    originalTimeout(() => {
+      callback();
+      runChangeDetection();
+    });
+  };
+
+  setTimeout(() => counter++, 2000);
+  ```
+- Vue
+  => `Proxy`
+- React
+  => `setState()`
+- Svelte
+  => assignment detection `counter = 4;` `products = products;`
+- Blazor
+  => klein algoritme: wanneer een event afgaat, roep methode aan, run change detection
+    `@onclick="Save"`
+    => daarna RunChangeDetection()
+    => niet geawaite async zaken = nope - `StateHasChanged()`!
+
+## Het ververs je je lijstje?
+
+Jouw lokale collectie/list wordt gebruikt bij het renderen. Hoe ververs je die na add-/edit-/delete-operaties via backend? Zonder op F5 te drukken.
+
+1. Het object dat je terugkrijgt van repo toevoegen aan lokale lijstje
+   - En het oude object verwijderen bij edit
+   - nadeel: iets complexer, zeker met edit.
+   - nadeel: niet volledig in sync qua data. Paginatie/filtering/sorteringregels?
+   - voordeel: snell-ish. minder traag. enkel POST-request afwachten.
+
+2. Redirect to overzicht
+   - voordeel: accurate data.
+   - voordeel: gebruiker kan meteen door
+   - voordeel: vaak heel gemakkelijk te implementeren
+
+3. Hele lijst opnieuw ophalen
+   - voordeel: vaak heel gemakkelijk te implementeren .GetAll()
+   - nadeel: traagst. POST + GET
+   - nadeel: maximale serverbelasting
+
+4. Meteen je lokale lijstje bijwerken
+   - nadeel: als de POST stukgaat, moet je dat wel heel duidelijk maken aan de 
+     gebruiker
+     - hoop werk
+   - voordeel: snel. direct feedback. vindt gebruiker prettig.
+   - nadeel: out of sync. Je hebt geen ID. Edit/Delete/Details. Paginatie.
+   - Optimistic UI
+
 ## Coole links
 
 - [Framework benchmark comparison](https://github.com/krausest/js-framework-benchmark)
