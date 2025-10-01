@@ -113,11 +113,57 @@ Is meestal deze stappen doorlopen:
 
 Meestal ben je dan good to go!
 
+## Nadelen `HttpClient`
+
+- testbaarheid: geen `Mock<IHttpClient>()`
+- GET is dikke prima 👍
+- voor POST kun je niet meteen de response typed terugkrijgen:
+
+```cs
+var response = await http.PostAsJsonAsync<Burger>("http://...", new Burger());
+var responseData = await response.Content.ReadFromJsonAsync<Burger>();
+```
+
+Oplossingen/alternatieven:
+
+- Library als [Flurl](https://flurl.dev/) - makkelijker testbaar en wat veelzijdiger
+- Wrapper om `HttpClient` schrijven voor makkelijkere operaties: "typed HttpClient"
+- Client genereren op basis van OpenAPI
+- [Refit](https://github.com/reactiveui/refit)
+
+## CORS
+
+Niet relevant voor ons huidige project, maar wel even benoemen.
+
+- wordt vaak als "gezeur" ervaren
+- vaak een een pentestbevinding
+- "Cross-origin resource sharing"
+- is een security features, volledig afhankelijk van je browser. Een command-line project heeft hier geen last van.
+
+browser van domein A ===> domein B  HTTP-request VANUIT JAVASCRIPT
+- POST, PUT, PATCH en DELETE: eerst even een OPTIONS request sturen  ACcess-Control-Allow-Origin header
+- GET voert hij WEL meteen uit
+  - kijkt in response naar `ACcess-Control-Allow-Origin` header
+    - worden die niet meegegeven? dan is de response niet uitleesbaar voor je JS-code
+
+## Minimal API vs controllers?
+
+- Minimal API is minder formele structuur - bedenk je eigen structuur!
+- minimal API is performance++ want hij is MINIMAL - er zit minder in
+  - geen data annotation-validaties
+  - geen controllerfactory
+  - geen action filter attributes
+- Met typed results haak je nauwer in op OpenAPI-docs
+  - Met `[Produces()]` `[Consumes(Result<string>)]` kan een mismatch ontstaan tussen wat je documenteert en wat je echt teruggeeft
+- Dependency injection werkt iets anders:
+  - controller: bij de constructor declareren. Met 8 methoden in je controller worden er waarschijnlijk dependencies aangemaakt die vervolgens niet gebruikt worden.
+  - minimal API: methode zelf, daarmee dan ook veel nauwkeuriger resource-gebruik
+
 ## Coole links
 
 - [Framework benchmark comparison](https://github.com/krausest/js-framework-benchmark)
 - [Awesome Blazor](https://github.com/AdrienTorris/awesome-blazor?tab=readme-ov-file#libraries--extensions), geinig repootje met een hoop handige dingen voor Blazor. Mooi overzichtje component libraries.
-
+- [Rendermodes detecteren in Blazor 8](https://blog.lhotka.net/2024/03/30/Blazor-8-Render-Mode-Detection), Blazor 9+ heeft [`RendererInfo`](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/render-modes?view=aspnetcore-9.0)
 
 
 
