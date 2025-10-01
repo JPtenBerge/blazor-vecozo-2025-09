@@ -23,6 +23,14 @@ public class Program
             opts.UseSqlServer(builder.Configuration.GetConnectionString("DemoContext"));
         }, ServiceLifetime.Transient);
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("jouw-frontend", policy =>
+            {
+                policy.WithOrigins("https://localhost:34885").AllowAnyHeader().AllowCredentials().AllowAnyMethod();
+            });
+        }); 
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -34,6 +42,8 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+
+        app.UseCors("jouw-frontend");
 
         app.UseStaticFiles();
         app.UseAntiforgery();

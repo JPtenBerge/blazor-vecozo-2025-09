@@ -1,22 +1,20 @@
 ﻿using Demo.Shared.Entities;
 using Demo.Shared.Repositories;
+using Flurl.Http;
 
 namespace BlazorApp1.Client.Repositories;
 
 public class BurgerRepository : IBurgerRepository
 {
-
-    public Task<IEnumerable<Burger>> GetAllAsync()
+    public async Task<IEnumerable<Burger>> GetAllAsync()
     {
-        var burgers = new List<Burger>
-        {
-            new() { Id = 4, Name = "McWerk", Price = 50000m, Rating = 2, PhotoUrl = ""}
-        };
-        return Task.FromResult(burgers.AsEnumerable());
+        return await "https://localhost:7270/api/burgers".GetJsonAsync<IEnumerable<Burger>>();
     }
 
-    public Task<Burger> AddAsync(Burger newBurger)
+    public async Task<Burger> AddAsync(Burger newBurger)
     {
-        throw new NotImplementedException();
+        return await "https://localhost:7270/api/burgers"
+            .PostJsonAsync(newBurger)
+            .ReceiveJson<Burger>();
     }
 }
