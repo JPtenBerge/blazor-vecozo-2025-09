@@ -9,6 +9,8 @@
 
 In browser? @OperatingSystem.IsBrowser()
 
+<button @onclick="Add">Voeg burger toe</button>
+
 @if (Burgers is not null)
 {
     <ul>
@@ -49,5 +51,12 @@ In browser? @OperatingSystem.IsBrowser()
     {
         Console.WriteLine("2. nu persisteren");
         PersistentComponentState.PersistAsJson("burgers", Burgers);
+    }
+
+    async Task Add()
+    {
+        var newBurger = new Burger { Name = "Big Kahuna Burger", Price = 3M, Rating = 6M, PhotoUrl = "" };
+        var updatedBurger = await BurgerRepository.AddAsync(newBurger);
+        Burgers!.Add(updatedBurger);
     }
 }
