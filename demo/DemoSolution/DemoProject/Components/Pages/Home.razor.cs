@@ -1,5 +1,5 @@
-﻿using DemoProject.Entities;
-using DemoProject.Repositories;
+﻿using Demo.Shared.Entities;
+using Demo.Shared.Repositories;
 using Microsoft.AspNetCore.Components;
 
 namespace DemoProject.Components.Pages;

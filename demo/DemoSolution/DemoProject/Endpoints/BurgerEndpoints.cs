@@ -1,6 +1,5 @@
-﻿using DemoProject.Entities;
-using DemoProject.Repositories;
-using Microsoft.Extensions.Hosting;
+﻿using Demo.Shared.Entities;
+using Demo.Shared.Repositories;
 
 namespace DemoProject.Endpoints;
 

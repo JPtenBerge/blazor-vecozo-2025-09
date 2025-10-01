@@ -1,21 +1,33 @@
 ﻿@page "/counter"
 @rendermode InteractiveWebAssembly
+@inject NavigationManager NavigationManager
 
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
 
-RUnning in browser? @OperatingSystem.IsBrowser()
+Draait mijn code in de browser? @OperatingSystem.IsBrowser()
 
 <p role="status">Current count: @currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<button @onclick="Navigate">Navigeer</button>
+
+Werk: <input @bind="Text" />
+
 @code {
     private int currentCount = 0;
+
+    public string Text { get; set; }
 
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    void Navigate()
+    {
+        NavigationManager.NavigateTo("/interactive-wasm");
     }
 }

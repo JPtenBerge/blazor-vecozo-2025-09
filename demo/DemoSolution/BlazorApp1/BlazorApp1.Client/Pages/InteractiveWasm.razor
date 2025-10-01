@@ -1,0 +1,53 @@
+﻿@page "/interactive-wasm"
+@using Demo.Shared.Entities
+@using Demo.Shared.Repositories
+@inject IBurgerRepository BurgerRepository
+@inject PersistentComponentState PersistentComponentState
+@rendermode InteractiveWebAssembly
+
+<h3>Interactive WebAssembly</h3>
+
+In browser? @OperatingSystem.IsBrowser()
+
+@if (Burgers is not null)
+{
+    <ul>
+        @foreach (var burger in Burgers)
+        {
+            <li>@burger.Name kost @burger.Price.ToString("C")</li>
+        }
+    </ul>
+}
+
+@code {
+
+    public List<Burger>? Burgers { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("hallo vanuiat init");
+
+        PersistentComponentState.RegisterOnPersisting(Persist);
+
+        // TryTakeFromJson:
+        // - tijdens persisten: er zit nog niks in
+        // - in browser: hey er zit iets in!
+
+        if (PersistentComponentState.TryTakeFromJson<List<Burger>>("burgers", out var burgers))
+        {
+            Console.WriteLine("hey ik zit in de browser");
+            Burgers = burgers;
+        }
+        else
+        {
+            Console.WriteLine("1. hey ik ben aan prerenderen");
+            Burgers = (await BurgerRepository.GetAllAsync()).ToList();
+        }
+    }
+
+    async Task Persist()
+    {
+        Console.WriteLine("2. nu persisteren");
+        PersistentComponentState.PersistAsJson("burgers", Burgers);
+    }
+}
