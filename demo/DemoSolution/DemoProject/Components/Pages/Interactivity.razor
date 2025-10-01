@@ -31,16 +31,15 @@ Counter staat nu op: @Counter
     protected override async Task OnInitializedAsync()
     {
         Burgers = (await BurgerRepository.GetAllAsync()).ToList();
-
-
     }
 
     void Start()
     {
-        var i = 0;
+        // var i = 0;
         var timer = new Timer(new TimerCallback(state =>
         {
-            Console.WriteLine($"timer gestart! {++i} {Thread.CurrentThread.ManagedThreadId}");
+            Console.WriteLine($"timer gestart! {++Counter} {Thread.CurrentThread.ManagedThreadId}");
+            InvokeAsync(() => StateHasChanged());
         }), null, 1000, 1000);
     }
 
